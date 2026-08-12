@@ -49,7 +49,11 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(ApiError.of(400, "VALIDATION_ERROR", "Request validation failed", details));
     }
-
+    @ExceptionHandler(ShiftConflictException.class)
+    public ResponseEntity<ApiError> handleShiftConflict(ShiftConflictException ex) {
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(ApiError.of(409, "SHIFT_CONFLICT", ex.getMessage()));
+    }
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiError> handleUnexpected(Exception ex) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
