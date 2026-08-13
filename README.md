@@ -21,8 +21,22 @@ Java 21 · Spring Boot 3 · Spring Security · PostgreSQL · Flyway · Docker ·
 
 ## Architecture
 
-```
-Client → JWT Auth Filter → Controller → Service (tenant-scoped) → Repository → PostgreSQL
+```mermaid
+flowchart LR
+    Client([Client])
+    Filter[JWT Auth Filter]
+    Controller[Controller]
+    Service["Service<br/>(tenant-scoped)"]
+    Repo[Repository]
+    DB[(PostgreSQL)]
+    Audit[(Audit Log)]
+
+    Client -->|Bearer token| Filter
+    Filter -->|businessId from JWT only| Controller
+    Controller --> Service
+    Service --> Repo
+    Repo --> DB
+    Service -.->|mutating actions| Audit
 ```
 
 Tenant isolation is the core design decision here: every table that belongs to a business carries an explicit `business_id`, and every repository method that touches those tables requires that ID as a parameter — there's no implicit "current tenant" filter that a future query could accidentally skip. The `business_id` itself comes exclusively from the signed JWT, never from anything the client sends directly, so there's no way for one business to query or modify another's data even by mistake.
