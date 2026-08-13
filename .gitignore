@@ -43,3 +43,4 @@ build/
 # Environment secrets - never commit real credentials
 .env
 *.env.local
+.testcontainers.properties
