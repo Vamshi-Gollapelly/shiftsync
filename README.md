@@ -1,3 +1,4 @@
+![CI](https://github.com/Vamshi-Gollapelly/shiftsync/actions/workflows/ci.yml/badge.svg)
 # ShiftSync
 
 A multi-tenant shift-rostering API for small hospitality and retail businesses — the kind of internal tool that lets one system safely serve many independent cafés, restaurants, or shops without their data ever mixing.
