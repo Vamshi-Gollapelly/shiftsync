@@ -56,6 +56,12 @@ curl -X POST http://localhost:8080/api/v1/auth/register \
 ```
 
 This returns a JWT access token you can use to hit protected endpoints.
+## Testing
+
+Full test suite: 11 tests, all passing.
+
+- **Unit tests** (`ShiftServiceTest`, `StaffServiceTest`) — 8 tests covering shift overlap detection, RBAC enforcement, and validation rules, using Mockito to isolate business logic from the database.
+- **Integration test** (`AuthIntegrationTest`) — 3 tests exercising the full registration/login flow against a real, disposable PostgreSQL container via Testcontainers, proving the whole stack (controller → service → repository → database) works end-to-end.
 
 ## What's next
 
